@@ -1,0 +1,64 @@
+# depslib dependency file v1.0
+1358470251 source:d:\development\development_projects\raytracer\raytracer_cbproject\src\libtarga.c
+	<stdio.h>
+	<malloc.h>
+	<include/libtarga.h>
+
+1336104795 d:\development\development_projects\raytracer\raytracer_cbproject\include\libtarga.h
+
+1358470260 source:d:\development\development_projects\raytracer\raytracer_cbproject\src\raygun.cpp
+	<include/RayGun.h>
+	<iostream>
+	<cmath>
+
+1358470470 d:\development\development_projects\raytracer\raytracer_cbproject\include\raygun.h
+	<vector>
+	<iostream>
+	<include/Utility.h>
+	<include/Shapes.h>
+
+1344182711 d:\development\development_projects\raytracer\raytracer_cbproject\include\utility.h
+	<iostream>
+	<cstddef>
+	<vector>
+
+1343884419 d:\development\development_projects\raytracer\raytracer_cbproject\include\shapes.h
+	<iostream>
+	"Utility.h"
+
+1358470367 source:d:\development\development_projects\raytracer\raytracer_cbproject\src\raytracer.cpp
+	<iostream>
+	<vector>
+	<include/Utility.h>
+	<include/Shapes.h>
+	<include/RayGun.h>
+	<include/Scene.h>
+
+1344102163 d:\development\development_projects\raytracer\raytracer_cbproject\include\scene.h
+	<iostream>
+	"RayGun.h"
+	<vector>
+	"libtarga.h"
+
+1358470545 source:d:\development\development_projects\raytracer\raytracer_cbproject\src\scene.cpp
+	<cstdio>
+	<include/Scene.h>
+
+1358470426 source:d:\development\development_projects\raytracer\raytracer_cbproject\src\shapes.cpp
+	<cmath>
+	<include/Shapes.h>
+
+1358470439 source:d:\development\development_projects\raytracer\raytracer_cbproject\src\stdafx.cpp
+	<include/stdafx.h>
+
+1329965317 d:\development\development_projects\raytracer\raytracer_cbproject\include\stdafx.h
+	"targetver.h"
+	<stdio.h>
+	<tchar.h>
+
+1358470613 d:\development\development_projects\raytracer\raytracer_cbproject\include\targetver.h
+
+1358470449 source:d:\development\development_projects\raytracer\raytracer_cbproject\src\utility.cpp
+	<iostream>
+	<include/Utility.h>
+
