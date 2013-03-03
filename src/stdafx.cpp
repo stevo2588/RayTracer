@@ -1,5 +1,5 @@
 // stdafx.cpp : source file that includes just the standard includes
-// RayTracer.pch will be the pre-compiled header
+// Raytracer.pch will be the pre-compiled header
 // stdafx.obj will contain the pre-compiled type information
 
 #include <include/stdafx.h>

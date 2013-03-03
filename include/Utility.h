@@ -5,7 +5,8 @@
 #ifndef RAYTRACER_UTILITY_H_
 #define RAYTRACER_UTILITY_H_
 
-#include <iostream> // remove me
+#include <iostream> // remove
+#include <sstream>
 #include <cstddef>
 #include <vector>
 class Shape;
@@ -18,15 +19,25 @@ public:
 public:
 	Vector3D();
 	Vector3D(double x, double y, double z);
+
+   double calcMagnitude();
+   Vector3D normalize();
 	Vector3D& operator=(const Vector3D &rhs);
+	Vector3D operator-() const;
 	friend Vector3D operator+(const Vector3D &v1, const Vector3D &v2);
 	friend Vector3D operator-(const Vector3D &v1, const Vector3D &v2);
-	double dotProduct(const Vector3D &v);
-	friend double operator *(const Vector3D &v1, const double s); // need the same with arguments switched?
+	double dotProduct(const Vector3D &v) const;
+	Vector3D crossProduct(const Vector3D &v);
+	friend Vector3D operator*(const Vector3D &v1, const double s); // need the same with arguments switched?
+	friend Vector3D operator/(const Vector3D &v1, const double s);
 	friend Vector3D operator*(const Matrix3D &s, const Vector3D &v);
 	friend Vector3D m_mult_dirVec(const Matrix3D &s, const Vector3D &v);
 
-	void printElements() const {for(int i=0; i<3; ++i) std::cout << elements[i] << " "; std::cout << std::endl;}
+	std::string toString() const {
+	   std::ostringstream convert;
+	   convert << "(" << elements[0] << "," << elements[1] << "," << elements[2] << ")";
+	   return convert.str();
+   }
 };
 
 //------------- Matrix3D ----------------------------
@@ -53,24 +64,36 @@ public:
 //------------- Ray -----------------------------
 class Ray {
 public:
-	Vector3D srcPos;
-	Vector3D dirPos;
-	
+	Vector3D src;
+	Vector3D dir;
+
 public:
-	Ray(Vector3D const& src, Vector3D const& dir) : srcPos(src),dirPos(dir) {} // possible mem leak?
+	Ray(Vector3D const& src, Vector3D const& endPt);
+	std::string toString() const {
+	   std::ostringstream convert;
+	   convert << "src: (" << src.elements[0] << "," << src.elements[1] << "," << src.elements[2] << "), "
+	   << "dir: (" << dir.elements[0] << "," << dir.elements[1] << "," << dir.elements[2] << ")";
+	   return convert.str();
+   }
 };
 
-//------------- Color ----------------------------
-class Color {
+//------------- HiDefColor ----------------------------
+class HiDefColor {
 public:
-	double r,g,b;
+	float r,g,b;
 public:
-	Color() : r(0), g(0), b(0) {}
-	Color(double r,double g,double b) : r(r),g(g),b(b) {}
-	Color(const Color& clr) : r(clr.r), g(clr.g), b(clr.b) {}
-	Color& operator=(const Color &rhs);
-	friend Color operator+(const Color &c1, const Color &c2);
-	friend Color operator-(const Color &c1, const Color &c2);
+	HiDefColor() : r(0), g(0), b(0) {}
+	HiDefColor(float r,float g,float b) : r(r),g(g),b(b) {}
+	HiDefColor(const HiDefColor& clr) : r(clr.r), g(clr.g), b(clr.b) {}
+	HiDefColor& operator=(const HiDefColor &rhs);
+	HiDefColor& operator+=(const HiDefColor &rhs);
+	friend HiDefColor operator+(const HiDefColor &c1, const HiDefColor &c2);
+	friend HiDefColor operator-(const HiDefColor &c1, const HiDefColor &c2);
+	friend HiDefColor operator*(const HiDefColor &lhs, double rhs);
+};
+
+struct Hit {
+   double distance;
 };
 
 #endif // RAYTRACER_UTILITY_H_

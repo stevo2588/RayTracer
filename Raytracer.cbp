@@ -4,6 +4,7 @@
 	<Project>
 		<Option title="Raytracer" />
 		<Option platforms="Windows;Unix;" />
+		<Option makefile_is_custom="1" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Build>
@@ -20,7 +21,18 @@
 					<Add library="sfml-graphics-d" />
 					<Add library="sfml-window-d" />
 					<Add library="sfml-system-d" />
+					<Add library="RocketCore_d.dll" />
+					<Add library="RocketControls_d.dll" />
+					<Add library="RocketDebugger_d.dll" />
 				</Linker>
+				<MakeCommands>
+					<Build command="$make -f $makefile debug" />
+					<CompileFile command="$make -f $makefile $file" />
+					<Clean command="$make -f $makefile debug-clean" />
+					<DistClean command="$make -f $makefile distclean$target" />
+					<AskRebuildNeeded command="$make -q -f $makefile debug" />
+					<SilentBuild command="$make -f $makefile debug &gt; $(CMD_NULL)" />
+				</MakeCommands>
 			</Target>
 			<Target title="Release">
 				<Option platforms="Windows;Unix;" />
@@ -36,122 +48,53 @@
 					<Add library="sfml-graphics" />
 					<Add library="sfml-window" />
 					<Add library="sfml-system" />
+					<Add library="RocketCore.dll" />
+					<Add library="RocketControls.dll" />
+					<Add library="RocketDebugger.dll" />
 				</Linker>
+				<MakeCommands>
+					<Build command="$make -f $makefile release" />
+					<CompileFile command="$make -f $makefile $file" />
+					<Clean command="$make -f $makefile release-clean" />
+					<DistClean command="$make -f $makefile distclean$target" />
+					<AskRebuildNeeded command="$make -q -f $makefile release" />
+					<SilentBuild command="$make -f $makefile release &gt; $(CMD_NULL)" />
+				</MakeCommands>
 			</Target>
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
 			<Add directory="../RayTracer_CBProject" />
 			<Add directory="SFML-2.0_1-17-13/include" />
+			<Add directory="libRocket/include" />
+			<Add directory="../../../../Program Files (x86)/GnuWin32/include" />
 		</Compiler>
 		<Linker>
+			<Add library="freetype" />
 			<Add directory="SFML-2.0_1-17-13/lib/windows" />
 			<Add directory="SFML-2.0_1-17-13/lib/linux" />
+			<Add directory="libRocket/lib/windows" />
+			<Add directory="libRocket/lib/linux" />
+			<Add directory="../../../../Program Files (x86)/GnuWin32/lib" />
 		</Linker>
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/Audio.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/Audio/Export.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/Audio/Listener.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/Audio/Music.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/Audio/Sound.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/Audio/SoundBuffer.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/Audio/SoundBufferRecorder.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/Audio/SoundRecorder.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/Audio/SoundSource.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/Audio/SoundStream.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/Config.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/Graphics.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/Graphics/BlendMode.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/Graphics/CircleShape.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/Graphics/Color.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/Graphics/ConvexShape.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/Graphics/Drawable.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/Graphics/Export.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/Graphics/Font.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/Graphics/Glyph.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/Graphics/Image.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/Graphics/PrimitiveType.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/Graphics/Rect.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/Graphics/Rect.inl" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/Graphics/RectangleShape.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/Graphics/RenderStates.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/Graphics/RenderTarget.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/Graphics/RenderTexture.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/Graphics/RenderWindow.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/Graphics/Shader.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/Graphics/Shape.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/Graphics/Sprite.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/Graphics/Text.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/Graphics/Texture.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/Graphics/Transform.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/Graphics/Transformable.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/Graphics/Vertex.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/Graphics/VertexArray.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/Graphics/View.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/Network.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/Network/Export.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/Network/Ftp.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/Network/Http.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/Network/IpAddress.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/Network/Packet.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/Network/Socket.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/Network/SocketHandle.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/Network/SocketSelector.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/Network/TcpListener.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/Network/TcpSocket.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/Network/UdpSocket.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/OpenGL.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/System.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/System/Clock.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/System/Err.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/System/Export.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/System/InputStream.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/System/Lock.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/System/Mutex.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/System/NonCopyable.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/System/Sleep.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/System/String.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/System/Thread.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/System/Thread.inl" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/System/ThreadLocal.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/System/ThreadLocalPtr.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/System/ThreadLocalPtr.inl" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/System/Time.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/System/Utf.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/System/Utf.inl" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/System/Vector2.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/System/Vector2.inl" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/System/Vector3.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/System/Vector3.inl" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/Window.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/Window/Context.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/Window/ContextSettings.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/Window/Event.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/Window/Export.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/Window/GlResource.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/Window/Joystick.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/Window/Keyboard.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/Window/Mouse.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/Window/VideoMode.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/Window/Window.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/Window/WindowHandle.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/include/SFML/Window/WindowStyle.hpp" />
-		<Unit filename="SFML-2.0_1-17-13/lib/windows/libsfml-audio.a" />
-		<Unit filename="SFML-2.0_1-17-13/lib/windows/libsfml-graphics.a" />
-		<Unit filename="SFML-2.0_1-17-13/lib/windows/libsfml-main.a" />
-		<Unit filename="SFML-2.0_1-17-13/lib/windows/libsfml-network.a" />
-		<Unit filename="SFML-2.0_1-17-13/lib/windows/libsfml-system.a" />
-		<Unit filename="SFML-2.0_1-17-13/lib/windows/libsfml-window.a" />
-		<Unit filename="SFML-2.0_1-17-13/lib/windows/sfml-audio-2.dll" />
-		<Unit filename="SFML-2.0_1-17-13/lib/windows/sfml-graphics-2.dll" />
-		<Unit filename="SFML-2.0_1-17-13/lib/windows/sfml-network-2.dll" />
-		<Unit filename="SFML-2.0_1-17-13/lib/windows/sfml-system-2.dll" />
-		<Unit filename="SFML-2.0_1-17-13/lib/windows/sfml-window-2.dll" />
-		<Unit filename="include/RayGun.h">
+		<ExtraCommands>
+			<Add before="$(#qt4)/bin/qmake -makefile -o Makefile" />
+		</ExtraCommands>
+		<Unit filename="include/Application.h" />
+		<Unit filename="include/Camera.h">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
+		<Unit filename="include/Color.h" />
+		<Unit filename="include/Events.h" />
+		<Unit filename="include/GUI/QSFMLCanvas.hpp" />
+		<Unit filename="include/GUI/renderWindowWrapper.hpp" />
+		<Unit filename="include/Light.h" />
+		<Unit filename="include/RayTracer.h" />
+		<Unit filename="include/RenderParams.h" />
 		<Unit filename="include/Scene.h">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
+		<Unit filename="include/Shader.h" />
 		<Unit filename="include/Shapes.h">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
@@ -167,19 +110,34 @@
 		<Unit filename="include/targetver.h">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
-		<Unit filename="src/RayGun.cpp" />
+		<Unit filename="src/Application.cpp" />
+		<Unit filename="src/Camera.cpp" />
+		<Unit filename="src/GUI/QSFMLCanvas.cpp" />
+		<Unit filename="src/Light.cpp" />
 		<Unit filename="src/RayTracer.cpp" />
+		<Unit filename="src/RenderParams.cpp" />
 		<Unit filename="src/Scene.cpp" />
+		<Unit filename="src/Shader.cpp" />
 		<Unit filename="src/Shapes.cpp" />
 		<Unit filename="src/Utility.cpp" />
 		<Unit filename="src/libtarga.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="src/main.cpp" />
 		<Unit filename="src/stdafx.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />
 			<debugger />
+			<DoxyBlocks>
+				<comment_style block="0" line="0" />
+				<doxyfile_project />
+				<doxyfile_build />
+				<doxyfile_warnings />
+				<doxyfile_output />
+				<doxyfile_dot />
+				<general />
+			</DoxyBlocks>
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>

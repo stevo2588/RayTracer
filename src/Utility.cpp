@@ -3,6 +3,7 @@
 //-------------------------------------------------
 //#include "stdafx.h"
 #include <iostream>
+#include <cmath>
 #include <include/Utility.h>
 
 //------------- Vector3D ----------------------------
@@ -18,9 +19,26 @@ Vector3D::Vector3D(double x, double y, double z) {
 	elements[2] = z;
 }
 
-double Vector3D::dotProduct(const Vector3D &v) {
+double Vector3D::calcMagnitude() {
+   return sqrt(elements[0]*elements[0]+elements[1]*elements[1]+elements[2]*elements[2]);
+}
+
+Vector3D Vector3D::normalize() {
+   double mag = calcMagnitude();
+   //std::cout << "mag: " << mag << std::endl;
+   return Vector3D(elements[0]/mag,elements[1]/mag,elements[2]/mag);
+}
+
+double Vector3D::dotProduct(const Vector3D &v) const {
 	double prod = this->elements[0]*v.elements[0] + this->elements[1]*v.elements[1] + this->elements[2]*v.elements[2];
 	return prod;
+}
+
+Vector3D Vector3D::crossProduct(const Vector3D &v) {
+   Vector3D prod = Vector3D(elements[1]*v.elements[2] - v.elements[1]*elements[2],
+                   elements[2]*v.elements[0] - v.elements[2]*elements[0],
+                   elements[0]*v.elements[1] - v.elements[0]*elements[1]);
+   return prod;
 }
 
 Vector3D& Vector3D::operator=(const Vector3D &rhs) {
@@ -33,6 +51,11 @@ Vector3D& Vector3D::operator=(const Vector3D &rhs) {
 	return *this;
 }
 
+Vector3D Vector3D::operator-() const {
+   Vector3D v(-elements[0],-elements[1],-elements[2]);
+   return v;
+}
+
 Vector3D operator+(const Vector3D &v1, const Vector3D &v2) {
 	return Vector3D(v1.elements[0]+v2.elements[0], v1.elements[1]+v2.elements[1], v1.elements[2]+v2.elements[2]);
 }
@@ -43,6 +66,14 @@ Vector3D operator-(const Vector3D &v1, const Vector3D &v2) {
 
 double operator*(const Vector3D &v1, const Vector3D &v2) {
 	return (v1.elements[0]*v2.elements[0]) + (v1.elements[1]*v2.elements[1]) + (v1.elements[2]*v2.elements[2]);
+}
+
+Vector3D operator*(const Vector3D &v1, const double s) {
+   return Vector3D(v1.elements[0]*s,v1.elements[1]*s,v1.elements[2]*s);
+}
+
+Vector3D operator/(const Vector3D &v1, const double s) {
+   return Vector3D(v1.elements[0]/s,v1.elements[1]/s,v1.elements[2]/s);
 }
 
 Vector3D operator*(const Matrix3D &s, const Vector3D &v) { // technically post-multiplication
@@ -256,10 +287,14 @@ void Matrix3D::printElements() const {
 }
 
 //------------- Ray ------------------------------
+Ray::Ray(Vector3D const& src, Vector3D const& endPt) : src(src) {
+   Vector3D vec = endPt - src;
+   dir = vec.normalize();
+}
 
 
-//------------- Color ----------------------------
-Color& Color::operator=(const Color &rhs) {
+//------------- HiDefColor ----------------------------
+HiDefColor& HiDefColor::operator=(const HiDefColor &rhs) {
 	if(this != &rhs) {
 		// Deallocate, allocate new space, copy values
 		this->r = rhs.r;
@@ -267,4 +302,22 @@ Color& Color::operator=(const Color &rhs) {
 		this->b = rhs.b;
 	}
 	return *this;
+}
+
+HiDefColor operator+(const HiDefColor &c1, const HiDefColor &c2) {
+   return HiDefColor(c1.r+c2.r, c1.g+c2.g, c1.b+c2.b);
+}
+
+HiDefColor& HiDefColor::operator+=(const HiDefColor &rhs) {
+   if(this != &rhs) {
+		/*this->r = rhs.r + this->r;
+		this->g = rhs.g + this->g;
+		this->b = rhs.b + this->b;*/
+		*this = rhs + *this;
+	}
+	return *this;
+}
+
+HiDefColor operator*(const HiDefColor &lhs, double rhs) {
+   return HiDefColor(lhs.r*rhs, lhs.g*rhs, lhs.b*rhs);
 }
