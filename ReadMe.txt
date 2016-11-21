@@ -2,11 +2,11 @@
     RayTracer Project Overview
 ========================================================================
 
-RayTracer.cpp
-    This is the main application source file.
+RayTracer
+    This program is a ray tracing renderer, used to convert 3D files and functions into photo-realistic and non-realistic 2D images.
 
 /////////////////////////////////////////////////////////////////////////////
-Other standard files:
+Standard files:
 
 StdAfx.h, StdAfx.cpp
     These files are used to build a precompiled header (PCH) file
